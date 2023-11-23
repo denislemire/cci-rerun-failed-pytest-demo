@@ -23,8 +23,8 @@ jobs:
           name: Run Tests and Generate JUnit Report
           command: |
             mkdir test-results
-            mkdir -p test-results
-            pytest --junitxml=test-results/junit-report.xml
+            TEST_FILES=$(circleci tests glob "**/test_*.py")
+            echo "$TEST_FILES" | circleci tests run --command="xargs pytest -o junit_family=legacy --junitxml=test-results/junit.xml" --verbose
 workflows:
   build_and_test_workflow:
     jobs:
